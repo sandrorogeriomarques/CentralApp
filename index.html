@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Cara Azul</title>
+    <style>
+        :root {
+            --primary: #2196F3;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --purple: #9C27B0;
+            --dark: #1e1e1e;
+            --light: #f4f4f4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            padding-top: 60px;
+            padding-bottom: 90px;
+        }
+
+        /* BARRA SUPERIOR FIXA */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background: var(--dark);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #back-btn {
+            position: absolute;
+            left: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        /* GRID E BOTÕES */
+        .grid-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 5px;
+        }
+
+        .btn-style {
+            padding: 20px;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* SOLUÇÃO: CONTAINER RESPONSIVO PARA BI */
+        .grafico-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 65%;
+            /* Proporção ideal para mobile */
+            overflow: hidden;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .grafico-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            border: none;
+        }
+
+        /* ABASTECIMENTOS POP & SPORT */
+        .graficos-duplos {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .graficos-duplos .grafico-container {
+            flex: 1;
+            padding-bottom: 55%;
+        }
+
+        @media (max-width: 480px) {
+            .graficos-duplos {
+                gap: 5px;
+            }
+        }
+
+        /* ALERTA DE ÓLEO */
+        .oil-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid var(--success);
+            padding-left: 10px;
+        }
+
+        .oil-status.critical {
+            border-left-color: var(--danger);
+        }
+
+        /* MENU INFERIOR */
+        nav.bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .nav-item b {
+            font-size: 26px;
+            margin-bottom: 2px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .view {
+            display: none;
+            margin: 0;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        #frame-view iframe {
+            width: 100%;
+            height: calc(100vh - 165px);
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div id="back-btn" onclick="goHome()">⬅</div>
+        <span id="header-title">CENTRAL CARA AZUL</span>
+    </header>
+
+    <div class="container">
+
+        <section id="home" class="view active">
+            <div class="grid-actions">
+                <a href="#" onclick="openForm('https://forms.gle/PY1dR4xUSnvWrMoU8', 'Rodagem')" class="btn-style"
+                    style="background: var(--primary); font-size: 16px;">➕ Rodagem / Ganhos</a>
+                <a href="#" onclick="openForm('https://forms.gle/b5B6q9fZjTVDxt6M8', 'Abastecer')" class="btn-style"
+                    style="background: var(--success); font-size: 16px;">⛽ Abastecer</a>
+            </div>
+
+            <!-- ALERTA DE ÓLEO -->
+            <div class="card">
+
+                <h4 style="margin:0 0 10px 0">Troca de Óleo POP & SPORT</h4>
+                <div class="grafico-container" style="padding-bottom: 60%;">
+                    <iframe width="321" height="216" seamless frameborder="0" scrolling="no"
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1020946095&amp;format=interactive"></iframe>
+                </div>
+            </div>
+            <div class="card oil-status">
+                <div>
+                    <iframe width="318" height="95" seamless frameborder="0" scrolling="no"
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=1604683197&amp;format=interactive"></iframe>
+                </div>
+            </div>
+
+            <!-- ALERTA DE ABASTECIMENTO -->
+            <div class="card">
+
+                <h4 style="margin:0 0 10px 0">
+                    Abastecimentos POP & SPORT
+                </h4>
+
+                <div class="graficos-duplos">
+
+                    <div class="grafico-container">
+                        <iframe width="158" height="186" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=270059517&amp;format=interactive"></iframe>
+                    </div>
+
+                    <div class="grafico-container">
+                        <iframe seamless frameborder="0" scrolling="no"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1541471568&amp;format=interactive">
+                        </iframe>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+                <div class="grafico-container">
+                    <iframe width="322" height="219" seamless frameborder="0" scrolling="no"
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=419653621&amp;format=interactive"></iframe>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <h4 style="margin:0 0 10px 0">Ganhos do dia por Aplicativo</h4>
+                <div class="grafico-container" style="padding-bottom: 15%;">
+                    <iframe width="321" height="50" seamless frameborder="0" scrolling="no"
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1550207636&amp;format=interactive"></iframe>
+                </div>
+
+                <div class="grafico-container" style="padding-bottom: 15%;">
+                    <iframe width="322" height="219" seamless frameborder="0" scrolling="no"
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=688946258&amp;format=interactive"></iframe>
+                </div>
+                
+                <div class="grafico-container" style="padding-bottom: 80%;">
+                    <iframe width="322" height="219" seamless frameborder="0" scrolling="no"
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=419653621&amp;format=interactive"></iframe>
+                </div>                
+            </div>
+
+            <div class="card">
+                <h4 style="margin:0 0 10px 0">Ganhos e Km Rodados Diários</h4>
+                <div class="grafico-container" style="padding-bottom: 100%;">
+                    <iframe width="362" height="362" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1390300631&amp;format=interactive"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="registrar" class="view">
+            <div class="btn-list">
+                <a href="#" onclick="openForm('https://forms.gle/PY1dR4xUSnvWrMoU8', 'Rodagem e Ganhos')"
+                    class="btn-style" style="background: #2196F3;">📝 Rodagem e Ganhos</a>
+                <a href="#" onclick="openForm('https://forms.gle/b5B6q9fZjTVDxt6M8', 'Abastecimento')" class="btn-style"
+                    style="background: #4CAF50;">⛽ Abastecimento</a>
+                <a href="#" onclick="openForm('https://forms.gle/xRRCWYjyUp2KcXoh8', 'Km Diário')" class="btn-style"
+                    style="background: #a707f1;">🏁 Km Diário</a>
+                <a href="#" onclick="openForm('https://forms.gle/8rdvFjhqHGfmga536', 'Troca de Óleo')" class="btn-style"
+                    style="background: #FF9800;">🛢️ Troca de Óleo</a>
+                <a href="#" onclick="openForm('https://forms.gle/BkwjmYr2LVPzdzhN9', 'Manutenção Geral')"
+                    class="btn-style" style="background: #F44336;">🔧 Manutenção Geral</a>
+
+                <a href="#"
+                    onclick="openForm('https://docs.google.com/spreadsheets/d/13y4rg9gAGVTeqSTsVPTcJKE58iNvlusloYQ2ez8T6dA/htmlembed?gid=2039344473&widget=false&chrome=false', 'Dashboard Geral')"
+                    class="btn-style" style="background: #9C27B0;">📊 Ver Dashboard</a>
+            </div>
+        </section>
+
+        <section id="frame-view" class="view">
+            <div class="grafico-container" style="padding-bottom: 15%;">
+                <iframe width="336" height="50" seamless frameborder="0" scrolling="no"
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=1186174710&amp;format=interactive"></iframe>
+            </div>
+            <iframe id="app-frame" src=""></iframe>
+        </section>
+
+        <section id="historico" class="view">
+            <div class="card">
+                <h4 style="margin:0 0 10px 0">Últimas Rodagens e Ganhos TB</h4>
+                <div class="grafico-container" style="padding-bottom: 90%;">
+                    <iframe
+                        src="https://docs.google.com/spreadsheets/d/13y4rg9gAGVTeqSTsVPTcJKE58iNvlusloYQ2ez8T6dA/htmlembed?gid=1811856705&widget=false&chrome=false&range=A1:G"></iframe>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4 style="margin:0 0 10px 0">Últimos Abastecimentos - TB ⬆️⬇️</h4>
+                <div class="grafico-container" style="padding-bottom: 90%;">
+                    <iframe
+                        src="https://docs.google.com/spreadsheets/d/13y4rg9gAGVTeqSTsVPTcJKE58iNvlusloYQ2ez8T6dA/htmlembed?gid=1225841314&widget=false&chrome=false&range=A1:D"></iframe>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4 style="margin:0 0 10px 0">Últimas Rodagens e Ganhos - Gráfico</h4>
+                <div class="grafico-container" style="padding-bottom: 80%;">
+                    <iframe width="690" height="371" seamless frameborder="0"
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=1585932873&amp;format=interactive"></iframe>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="#" id="nav-home" class="nav-item active" onclick="goHome()"><b>🏠</b>Início</a>
+        <a href="#" id="nav-reg" class="nav-item" onclick="showSection('registrar')"><b>➕</b>Registrar</a>
+        <a href="#" id="nav-hist" class="nav-item" onclick="showSection('historico')"><b>🕒</b>Histórico</a>
+    </nav>
+
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+
+            const backBtn = document.getElementById('back-btn');
+            const headerTitle = document.getElementById('header-title');
+
+            if (id === 'home') {
+                backBtn.style.display = 'none';
+                headerTitle.innerText = 'CENTRAL CARA AZUL';
+                updateNav('nav-home');
+            } else {
+                backBtn.style.display = 'block';
+                headerTitle.innerText = id.toUpperCase();
+                updateNav('nav-' + id.substring(0, 3));
+            }
+        }
+
+        function openForm(url, title) {
+            document.getElementById('header-title').innerText = title.toUpperCase();
+            document.getElementById('back-btn').style.display = 'block';
+            const frame = document.getElementById('app-frame');
+            frame.src = url;
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById('frame-view').classList.add('active');
+        }
+
+        function goHome() {
+            document.getElementById('app-frame').src = "";
+            showSection('home');
+        }
+
+        function updateNav(navId) {
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            const el = document.getElementById(navId);
+            if (el) el.classList.add('active');
+        }
+    </script>
+
+</body>
+
+</html>
