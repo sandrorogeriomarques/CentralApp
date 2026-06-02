@@ -1,154 +1,312 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Central Cara Azul</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2196F3;
-            --success: #4CAF50;
-            --warning: #FF9800;
-            --danger: #F44336;
-            --purple: #9C27B0;
-            --dark: #1e1e1e;
-            --light: #f4f4f4;
+            --blue:       #00AAFF;
+            --blue-dim:   #0077CC;
+            --blue-glow:  rgba(0,170,255,0.18);
+            --green:      #00E676;
+            --orange:     #FF9100;
+            --red:        #FF3D3D;
+            --purple:     #C653FF;
+
+            --bg:         #0D0F14;
+            --surface:    #141720;
+            --surface2:   #1C2030;
+            --border:     rgba(0,170,255,0.15);
+            --text:       #E8EAF0;
+            --muted:      #6B7280;
+
+            --header-h:   58px;
+            --nav-h:      72px;
+            --font-ui:    'Rajdhani', sans-serif;
+            --font-body:  'Inter', sans-serif;
         }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--light);
-            padding-top: 60px;
-            padding-bottom: 90px;
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            padding-top: var(--header-h);
+            padding-bottom: var(--nav-h);
+            min-height: 100vh;
         }
 
-        /* BARRA SUPERIOR FIXA */
+        /* ─── HEADER ─── */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 60px;
-            background: var(--dark);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-logo {
+            font-family: var(--font-ui);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            color: var(--text);
+            text-transform: uppercase;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .header-logo .dot {
+            width: 8px; height: 8px;
+            background: var(--blue);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--blue);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50%      { opacity: 0.5; transform: scale(0.8); }
         }
 
         #back-btn {
-            position: absolute;
-            left: 15px;
-            font-size: 24px;
-            cursor: pointer;
+            position: absolute; left: 14px;
+            font-size: 1.3rem; cursor: pointer;
             display: none;
+            color: var(--blue);
+            padding: 8px; border-radius: 6px;
+            transition: background 0.2s;
         }
+        #back-btn:hover { background: var(--blue-glow); }
 
+        /* ─── CONTAINER ─── */
         .container {
-            padding: 15px;
+            padding: 14px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        /* GRID E BOTÕES */
+        /* ─── GRID ACTIONS (botões de ação rápida) ─── */
         .grid-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 14px;
         }
 
-        .btn-list {
+        .btn-action {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding: 5px;
-        }
-
-        .btn-style {
-            padding: 20px;
-            color: white;
-            text-align: center;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 10px;
             border-radius: 10px;
+            color: white;
             text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: block;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+            position: relative;
+            overflow: hidden;
         }
 
+        .btn-action::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: rgba(255,255,255,0.08);
+            opacity: 0; transition: opacity 0.2s;
+        }
+        .btn-action:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn-action:hover::after { opacity: 1; }
+        .btn-action:active { transform: scale(0.97); }
+
+        .btn-blue   { background: linear-gradient(135deg, #0077CC, #00AAFF); box-shadow: 0 4px 16px rgba(0,170,255,0.3); }
+        .btn-green  { background: linear-gradient(135deg, #00A050, #00E676); box-shadow: 0 4px 16px rgba(0,230,118,0.3); }
+        .btn-purple { background: linear-gradient(135deg, #7B1FA2, #C653FF); box-shadow: 0 4px 16px rgba(198,83,255,0.3); }
+        .btn-orange { background: linear-gradient(135deg, #E65100, #FF9100); box-shadow: 0 4px 16px rgba(255,145,0,0.3); }
+        .btn-red    { background: linear-gradient(135deg, #C62828, #FF3D3D); box-shadow: 0 4px 16px rgba(255,61,61,0.3); }
+        .btn-teal   { background: linear-gradient(135deg, #006064, #00BCD4); box-shadow: 0 4px 16px rgba(0,188,212,0.3); }
+
+        /* ─── CARD ─── */
         .card {
-            background: white;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 14px;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* SOLUÇÃO: CONTAINER RESPONSIVO PARA BI */
+        .card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: var(--blue);
+            opacity: 0.7;
+        }
+
+        .card-title {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+
+        /* ─── IFRAME CONTAINERS ─── */
+        /*
+         * DICA PARA DUAS VERSÕES DOS GRÁFICOS:
+         * ─────────────────────────────────────────────────────────────────
+         * Os gráficos do Google Sheets são publicados com dimensões fixas
+         * (ex: width="321" height="216"). Em telas maiores eles ficam
+         * "pequenos" dentro de um iframe 100% → espaço em branco.
+         *
+         * SOLUÇÃO: Publique DOIS URLs por gráfico:
+         *
+         *   📱 VERSÃO MOBILE  → formato padrão (menor resolução)
+         *      pubchart?oid=XXX&format=interactive
+         *      Use dentro de .grafico-container com padding-bottom ajustado
+         *
+         *   🖥️ VERSÃO DESKTOP → no Google Sheets, publique o gráfico com
+         *      dimensões maiores (ex: 900x500) OU use o parâmetro de embed
+         *      do Google Sheets com &size=large ou ajuste o iframe original.
+         *      Use a classe .grafico-desktop que tem altura fixa em px.
+         *
+         * No CSS abaixo, .grafico-container é mobile-first (aspect-ratio).
+         * Em @media (min-width: 768px) cada card usa altura maior e o iframe
+         * escala melhor. Se quiser URLs separados, use:
+         *   <iframe class="iframe-mobile" src="URL_MOBILE">
+         *   <iframe class="iframe-desktop" src="URL_DESKTOP">
+         * E mostre/oculte com CSS: .iframe-desktop { display:none }
+         *   @media(min-width:768px) { .iframe-mobile{display:none} .iframe-desktop{display:block} }
+         * ─────────────────────────────────────────────────────────────────
+        */
+
         .grafico-container {
             position: relative;
             width: 100%;
+            padding-bottom: 62%;
             height: 0;
-            padding-bottom: 65%;
-            /* Proporção ideal para mobile */
             overflow: hidden;
-            background: #f9f9f9;
+            background: var(--surface2);
             border-radius: 8px;
         }
 
         .grafico-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+            position: absolute; top: 0; left: 0;
             width: 100% !important;
             height: 100% !important;
             border: none;
+            border-radius: 8px;
         }
 
-        /* ABASTECIMENTOS POP & SPORT */
+        /* Variantes de proporção */
+        .grafico-container.ratio-sq   { padding-bottom: 100%; }
+        .grafico-container.ratio-tall { padding-bottom: 85%; }
+        .grafico-container.ratio-slim { padding-bottom: 18%; }
+        .grafico-container.ratio-med  { padding-bottom: 60%; }
+
+        /* Duplos lado a lado */
         .graficos-duplos {
             display: flex;
             gap: 10px;
-            width: 100%;
         }
-
         .graficos-duplos .grafico-container {
             flex: 1;
             padding-bottom: 55%;
         }
 
-        @media (max-width: 480px) {
-            .graficos-duplos {
-                gap: 5px;
+        /* ─── DESKTOP LAYOUT ─── */
+        @media (min-width: 768px) {
+            :root {
+                --nav-h: 0px; /* nav vira sidebar no desktop */
+            }
+
+            body {
+                padding-bottom: 0;
+            }
+
+            /* Sidebar nav fixa à esquerda */
+            nav.bottom-nav {
+                position: fixed;
+                left: 0; top: var(--header-h); bottom: 0;
+                width: 80px;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 20px 0;
+                gap: 8px;
+                border-right: 1px solid var(--border);
+                border-top: none;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            }
+
+            .nav-item {
+                flex-direction: column;
+                width: 100%;
+                padding: 12px 0;
+                font-size: 0.65rem;
+                letter-spacing: 0.05em;
+            }
+
+            .nav-item b { font-size: 1.5rem; }
+
+            /* Empurra conteúdo pra direita da sidebar */
+            .container {
+                margin-left: 80px;
+                padding: 20px 24px;
+            }
+
+            /* Grid de 2 colunas para cards */
+            .desktop-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+                align-items: start;
+            }
+
+            .desktop-full { grid-column: 1 / -1; }
+
+            /* Iframes ficam maiores no desktop */
+            .grafico-container        { padding-bottom: 55%; }
+            .grafico-container.ratio-slim { padding-bottom: 16%; }
+            .grafico-container.ratio-sq   { padding-bottom: 70%; }
+            .grafico-container.ratio-med  { padding-bottom: 52%; }
+            .graficos-duplos .grafico-container { padding-bottom: 52%; }
+        }
+
+        @media (min-width: 1100px) {
+            nav.bottom-nav { width: 100px; }
+            .container { margin-left: 100px; padding: 24px 32px; }
+        }
+
+        @media (min-width: 1400px) {
+            .desktop-grid {
+                grid-template-columns: 1fr 1fr 1fr;
             }
         }
 
-        /* ALERTA DE ÓLEO */
-        .oil-status {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 5px solid var(--success);
-            padding-left: 10px;
-        }
-
-        .oil-status.critical {
-            border-left-color: var(--danger);
-        }
-
-        /* MENU INFERIOR */
+        /* ─── BOTTOM NAV ─── */
         nav.bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: white;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            height: var(--nav-h);
+            background: var(--surface);
+            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
-            padding: 15px 0;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            align-items: center;
             z-index: 1000;
         }
 
@@ -157,193 +315,263 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #888;
-            font-size: 1rem;
+            color: var(--muted);
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            gap: 2px;
         }
 
-        .nav-item b {
-            font-size: 26px;
-            margin-bottom: 2px;
-        }
+        .nav-item b { font-size: 1.4rem; font-weight: 400; }
 
-        .nav-item.active {
-            color: var(--primary);
-        }
+        .nav-item.active { color: var(--blue); }
+        .nav-item:hover  { background: var(--blue-glow); color: var(--blue); }
 
-        .view {
-            display: none;
-            margin: 0;
-        }
+        /* ─── VIEWS ─── */
+        .view { display: none; }
+        .view.active { display: block; }
 
-        .view.active {
-            display: block;
-        }
-
-        #frame-view iframe {
+        /* Frame view */
+        #frame-view iframe#app-frame {
             width: 100%;
-            height: calc(100vh - 165px);
+            height: calc(100vh - var(--header-h) - 90px);
             border: none;
+            border-radius: 10px;
+            background: var(--surface2);
         }
+
+        /* ─── BTN LIST (Registrar) ─── */
+        .btn-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 4px 0;
+        }
+
+        @media (min-width: 768px) {
+            .btn-list {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            .btn-list { grid-template-columns: 1fr 1fr 1fr; }
+        }
+
+        .btn-style {
+            padding: 20px 16px;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            text-decoration: none;
+            font-family: var(--font-ui);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            display: flex; align-items: center; justify-content: center;
+            gap: 8px;
+            transition: transform 0.15s, filter 0.15s, box-shadow 0.15s;
+        }
+        .btn-style:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn-style:active { transform: scale(0.97); }
+
+        /* ─── ANIMAÇÃO DE ENTRADA ─── */
+        @keyframes fadeUp {
+            from { opacity:0; transform: translateY(16px); }
+            to   { opacity:1; transform: translateY(0); }
+        }
+
+        .card { animation: fadeUp 0.3s ease both; }
+        .card:nth-child(1) { animation-delay: 0.05s; }
+        .card:nth-child(2) { animation-delay: 0.10s; }
+        .card:nth-child(3) { animation-delay: 0.15s; }
+        .card:nth-child(4) { animation-delay: 0.20s; }
+        .card:nth-child(5) { animation-delay: 0.25s; }
+        .card:nth-child(6) { animation-delay: 0.30s; }
+
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
     </style>
 </head>
-
 <body>
 
     <header>
         <div id="back-btn" onclick="goHome()">⬅</div>
-        <span id="header-title">CENTRAL CARA AZUL</span>
+        <div class="header-logo">
+            <div class="dot"></div>
+            <span id="header-title">CENTRAL CARA AZUL</span>
+        </div>
     </header>
 
     <div class="container">
 
+        <!-- ═══════════════════════════════ HOME ═══════════════════════════════ -->
         <section id="home" class="view active">
+
+            <!-- Ações rápidas -->
             <div class="grid-actions">
-                <a href="#" onclick="openForm('https://forms.gle/PY1dR4xUSnvWrMoU8', 'Rodagem')" class="btn-style"
-                    style="background: var(--primary); font-size: 16px;">➕ Rodagem / Ganhos</a>
-                <a href="#" onclick="openForm('https://forms.gle/b5B6q9fZjTVDxt6M8', 'Abastecer')" class="btn-style"
-                    style="background: var(--success); font-size: 16px;">⛽ Abastecer</a>
+                <a href="#" onclick="openForm('https://forms.gle/PY1dR4xUSnvWrMoU8','Rodagem')" class="btn-action btn-blue">➕ Rodagem / Ganhos</a>
+                <a href="#" onclick="openForm('https://forms.gle/b5B6q9fZjTVDxt6M8','Abastecer')" class="btn-action btn-green">⛽ Abastecer</a>
             </div>
 
-            <!-- ALERTA DE ÓLEO -->
-            <div class="card">
+            <!-- Desktop: grid de 2 colunas -->
+            <div class="desktop-grid">
 
-                <h4 style="margin:0 0 10px 0">Troca de Óleo POP & SPORT</h4>
-                <div class="grafico-container" style="padding-bottom: 60%;">
-                    <iframe width="321" height="216" seamless frameborder="0" scrolling="no"
-                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1020946095&amp;format=interactive"></iframe>
-                </div>
-            </div>
-            <div class="card oil-status">
-                <div>
-                    <iframe width="318" height="95" seamless frameborder="0" scrolling="no"
-                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=1604683197&amp;format=interactive"></iframe>
-                </div>
-            </div>
-
-            <!-- ALERTA DE ABASTECIMENTO -->
-            <div class="card">
-
-                <h4 style="margin:0 0 10px 0">
-                    Abastecimentos POP & SPORT
-                </h4>
-
-                <div class="graficos-duplos">
-
-                    <div class="grafico-container">
-                        <iframe width="158" height="186" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=270059517&amp;format=interactive"></iframe>
-                    </div>
-
-                    <div class="grafico-container">
+                <!-- Troca de óleo -->
+                <div class="card">
+                    <div class="card-title">🛢️ Troca de Óleo — POP &amp; SPORT</div>
+                    <div class="grafico-container ratio-med">
                         <iframe seamless frameborder="0" scrolling="no"
-                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1541471568&amp;format=interactive">
-                        </iframe>
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1020946095&amp;format=interactive"></iframe>
                     </div>
-
                 </div>
 
-            </div>
-
-            <div class="card">
-                <div class="grafico-container">
-                    <iframe width="322" height="219" seamless frameborder="0" scrolling="no"
-                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=419653621&amp;format=interactive"></iframe>
-                </div>
-            </div>
-
-
-            <div class="card">
-                <h4 style="margin:0 0 10px 0">Ganhos do dia por Aplicativo</h4>
-                <div class="grafico-container" style="padding-bottom: 15%;">
-                    <iframe width="321" height="50" seamless frameborder="0" scrolling="no"
-                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1550207636&amp;format=interactive"></iframe>
+                <!-- Status óleo -->
+                <div class="card">
+                    <div class="card-title">⚠️ Status de Óleo</div>
+                    <div class="grafico-container ratio-med">
+                        <iframe seamless frameborder="0" scrolling="no"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=1604683197&amp;format=interactive"></iframe>
+                    </div>
                 </div>
 
-                <div class="grafico-container" style="padding-bottom: 15%;">
-                    <iframe width="322" height="219" seamless frameborder="0" scrolling="no"
-                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=688946258&amp;format=interactive"></iframe>
+                <!-- Abastecimentos duplos -->
+                <div class="card">
+                    <div class="card-title">⛽ Abastecimentos — POP &amp; SPORT</div>
+                    <div class="graficos-duplos">
+                        <div class="grafico-container">
+                            <iframe seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=270059517&amp;format=interactive"></iframe>
+                        </div>
+                        <div class="grafico-container">
+                            <iframe seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1541471568&amp;format=interactive"></iframe>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="grafico-container" style="padding-bottom: 80%;">
-                    <iframe width="322" height="219" seamless frameborder="0" scrolling="no"
-                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=419653621&amp;format=interactive"></iframe>
-                </div>                
-            </div>
 
-            <div class="card">
-                <h4 style="margin:0 0 10px 0">Ganhos e Km Rodados Diários</h4>
-                <div class="grafico-container" style="padding-bottom: 100%;">
-                    <iframe width="362" height="362" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1390300631&amp;format=interactive"></iframe>
+                <!-- Gráfico extra de abastecimento -->
+                <div class="card">
+                    <div class="card-title">📊 Consumo Geral</div>
+                    <div class="grafico-container ratio-med">
+                        <iframe seamless frameborder="0" scrolling="no"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=419653621&amp;format=interactive"></iframe>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Ganhos do dia -->
+                <div class="card desktop-full">
+                    <div class="card-title">💰 Ganhos do Dia por Aplicativo</div>
+                    <div class="grafico-container ratio-slim" style="margin-bottom:10px;">
+                        <iframe seamless frameborder="0" scrolling="no"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1550207636&amp;format=interactive"></iframe>
+                    </div>
+                    <div class="graficos-duplos">
+                        <div class="grafico-container">
+                            <iframe seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=688946258&amp;format=interactive"></iframe>
+                        </div>
+                        <div class="grafico-container">
+                            <iframe seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=419653621&amp;format=interactive"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ganhos e Km diários -->
+                <div class="card desktop-full">
+                    <div class="card-title">🏁 Ganhos e Km Rodados Diários</div>
+                    <div class="grafico-container ratio-sq">
+                        <iframe seamless frameborder="0" scrolling="no"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1390300631&amp;format=interactive"></iframe>
+                    </div>
+                </div>
+
+            </div><!-- /desktop-grid -->
         </section>
 
+        <!-- ═══════════════════════════════ REGISTRAR ════════════════════════════ -->
         <section id="registrar" class="view">
             <div class="btn-list">
-                <a href="#" onclick="openForm('https://forms.gle/PY1dR4xUSnvWrMoU8', 'Rodagem e Ganhos')"
-                    class="btn-style" style="background: #2196F3;">📝 Rodagem e Ganhos</a>
-                <a href="#" onclick="openForm('https://forms.gle/b5B6q9fZjTVDxt6M8', 'Abastecimento')" class="btn-style"
-                    style="background: #4CAF50;">⛽ Abastecimento</a>
-                <a href="#" onclick="openForm('https://forms.gle/xRRCWYjyUp2KcXoh8', 'Km Diário')" class="btn-style"
-                    style="background: #a707f1;">🏁 Km Diário</a>
-                <a href="#" onclick="openForm('https://forms.gle/8rdvFjhqHGfmga536', 'Troca de Óleo')" class="btn-style"
-                    style="background: #FF9800;">🛢️ Troca de Óleo</a>
-                <a href="#" onclick="openForm('https://forms.gle/BkwjmYr2LVPzdzhN9', 'Manutenção Geral')"
-                    class="btn-style" style="background: #F44336;">🔧 Manutenção Geral</a>
-
-                <a href="#"
-                    onclick="openForm('https://docs.google.com/spreadsheets/d/13y4rg9gAGVTeqSTsVPTcJKE58iNvlusloYQ2ez8T6dA/htmlembed?gid=2039344473&widget=false&chrome=false', 'Dashboard Geral')"
-                    class="btn-style" style="background: #9C27B0;">📊 Ver Dashboard</a>
+                <a href="#" onclick="openForm('https://forms.gle/PY1dR4xUSnvWrMoU8','Rodagem e Ganhos')"      class="btn-style btn-blue">📝 Rodagem e Ganhos</a>
+                <a href="#" onclick="openForm('https://forms.gle/b5B6q9fZjTVDxt6M8','Abastecimento')"         class="btn-style btn-green">⛽ Abastecimento</a>
+                <a href="#" onclick="openForm('https://forms.gle/xRRCWYjyUp2KcXoh8','Km Diário')"             class="btn-style btn-purple">🏁 Km Diário</a>
+                <a href="#" onclick="openForm('https://forms.gle/8rdvFjhqHGfmga536','Troca de Óleo')"         class="btn-style btn-orange">🛢️ Troca de Óleo</a>
+                <a href="#" onclick="openForm('https://forms.gle/BkwjmYr2LVPzdzhN9','Manutenção Geral')"      class="btn-style btn-red">🔧 Manutenção Geral</a>
+                <a href="#" onclick="openForm('https://docs.google.com/spreadsheets/d/13y4rg9gAGVTeqSTsVPTcJKE58iNvlusloYQ2ez8T6dA/htmlembed?gid=2039344473&widget=false&chrome=false','Dashboard Geral')" class="btn-style btn-teal">📊 Ver Dashboard</a>
             </div>
         </section>
 
+        <!-- ═══════════════════════════════ FRAME VIEW ══════════════════════════ -->
         <section id="frame-view" class="view">
-            <div class="grafico-container" style="padding-bottom: 15%;">
-                <iframe width="336" height="50" seamless frameborder="0" scrolling="no"
+            <div class="grafico-container ratio-slim" style="margin-bottom:10px;">
+                <iframe seamless frameborder="0" scrolling="no"
                     src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=1186174710&amp;format=interactive"></iframe>
             </div>
             <iframe id="app-frame" src=""></iframe>
         </section>
 
+        <!-- ═══════════════════════════════ HISTÓRICO ════════════════════════════ -->
         <section id="historico" class="view">
-            <div class="card">
-                <h4 style="margin:0 0 10px 0">Últimas Rodagens e Ganhos TB</h4>
-                <div class="grafico-container" style="padding-bottom: 90%;">
-                    <iframe
-                        src="https://docs.google.com/spreadsheets/d/13y4rg9gAGVTeqSTsVPTcJKE58iNvlusloYQ2ez8T6dA/htmlembed?gid=1811856705&widget=false&chrome=false&range=A1:G"></iframe>
-                </div>
-            </div>
+            <div class="desktop-grid">
 
-            <div class="card">
-                <h4 style="margin:0 0 10px 0">Últimos Abastecimentos - TB ⬆️⬇️</h4>
-                <div class="grafico-container" style="padding-bottom: 90%;">
-                    <iframe
-                        src="https://docs.google.com/spreadsheets/d/13y4rg9gAGVTeqSTsVPTcJKE58iNvlusloYQ2ez8T6dA/htmlembed?gid=1225841314&widget=false&chrome=false&range=A1:D"></iframe>
+                <div class="card">
+                    <div class="card-title">📋 Últimas Rodagens e Ganhos TB</div>
+                    <div class="grafico-container ratio-tall">
+                        <iframe src="https://docs.google.com/spreadsheets/d/13y4rg9gAGVTeqSTsVPTcJKE58iNvlusloYQ2ez8T6dA/htmlembed?gid=1811856705&widget=false&chrome=false&range=A1:G"></iframe>
+                    </div>
                 </div>
-            </div>
 
-            <div class="card">
-                <h4 style="margin:0 0 10px 0">Últimas Rodagens e Ganhos - Gráfico</h4>
-                <div class="grafico-container" style="padding-bottom: 80%;">
-                    <iframe width="690" height="371" seamless frameborder="0"
-                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=1585932873&amp;format=interactive"></iframe>
+                <div class="card">
+                    <div class="card-title">📋 Últimos Abastecimentos</div>
+                    <div class="grafico-container ratio-tall">
+                        <iframe src="https://docs.google.com/spreadsheets/d/13y4rg9gAGVTeqSTsVPTcJKE58iNvlusloYQ2ez8T6dA/htmlembed?gid=1225841314&widget=false&chrome=false&range=A1:D"></iframe>
+                    </div>
                 </div>
+
+                <div class="card desktop-full">
+                    <div class="card-title">📈 Rodagens e Ganhos — Gráfico</div>
+                    <div class="grafico-container ratio-med">
+                        <iframe seamless frameborder="0"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=1585932873&amp;format=interactive"></iframe>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-    </div>
+    </div><!-- /container -->
 
+    <!-- ─── NAV ─── -->
     <nav class="bottom-nav">
-        <a href="#" id="nav-home" class="nav-item active" onclick="goHome()"><b>🏠</b>Início</a>
-        <a href="#" id="nav-reg" class="nav-item" onclick="showSection('registrar')"><b>➕</b>Registrar</a>
-        <a href="#" id="nav-hist" class="nav-item" onclick="showSection('historico')"><b>🕒</b>Histórico</a>
+        <a href="#" id="nav-home" class="nav-item active" onclick="goHome()">
+            <b>🏠</b>Início
+        </a>
+        <a href="#" id="nav-reg" class="nav-item" onclick="showSection('registrar')">
+            <b>➕</b>Registrar
+        </a>
+        <a href="#" id="nav-his" class="nav-item" onclick="showSection('historico')">
+            <b>🕒</b>Histórico
+        </a>
     </nav>
 
     <script>
         function showSection(id) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(id).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            const backBtn = document.getElementById('back-btn');
+            const backBtn    = document.getElementById('back-btn');
             const headerTitle = document.getElementById('header-title');
 
             if (id === 'home') {
@@ -352,22 +580,25 @@
                 updateNav('nav-home');
             } else {
                 backBtn.style.display = 'block';
-                headerTitle.innerText = id.toUpperCase();
-                updateNav('nav-' + id.substring(0, 3));
+                const labels = { registrar:'REGISTRAR', historico:'HISTÓRICO' };
+                headerTitle.innerText = labels[id] || id.toUpperCase();
+                const navMap = { registrar:'nav-reg', historico:'nav-his' };
+                updateNav(navMap[id] || '');
             }
         }
 
         function openForm(url, title) {
             document.getElementById('header-title').innerText = title.toUpperCase();
             document.getElementById('back-btn').style.display = 'block';
-            const frame = document.getElementById('app-frame');
-            frame.src = url;
+            document.getElementById('app-frame').src = url;
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById('frame-view').classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function goHome() {
-            document.getElementById('app-frame').src = "";
+            document.getElementById('app-frame').src = '';
             showSection('home');
         }
 
@@ -379,5 +610,4 @@
     </script>
 
 </body>
-
 </html>
