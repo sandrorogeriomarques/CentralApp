@@ -181,9 +181,13 @@
          *      Use dentro de .grafico-container com padding-bottom ajustado
          *
          *   🖥️ VERSÃO DESKTOP → no Google Sheets, publique o gráfico com
-         *      dimensões maiores (ex: 900x500) OU use o parâmetro de embed
+         *      dimensões testadas aqui: 600x290 OU use o parâmetro de embed
          *      do Google Sheets com &size=large ou ajuste o iframe original.
          *      Use a classe .grafico-desktop que tem altura fixa em px.
+         *
+         * Para este projeto pessoal, usamos tamanhos exatos:
+         *   Desktop: 600x290
+         *   Mobile:  328x196
          *
          * No CSS abaixo, .grafico-container é mobile-first (aspect-ratio).
          * Em @media (min-width: 768px) cada card usa altura maior e o iframe
@@ -211,6 +215,15 @@
             height: 100% !important;
             border: none;
             border-radius: 8px;
+        }
+
+        /* Controle de versão mobile vs desktop */
+        .grafico-container .iframe-mobile { display: block; }
+        .grafico-container .iframe-desktop { display: none; }
+
+        @media (min-width: 768px) {
+            .grafico-container .iframe-mobile { display: none; }
+            .grafico-container .iframe-desktop { display: block; }
         }
 
         /* Variantes de proporção */
@@ -431,8 +444,13 @@
                 <div class="card">
                     <div class="card-title">🛢️ Troca de Óleo — POP &amp; SPORT</div>
                     <div class="grafico-container ratio-med">
-                        <iframe seamless frameborder="0" scrolling="no"
-                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1020946095&amp;format=interactive"></iframe>
+                        <!-- Versão MOBILE (600x350) -->
+                        <iframe class="iframe-mobile" seamless frameborder="0" scrolling="no"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1038235011&amp;format=interactive"></iframe>
+                        
+                        <!-- Versão DESKTOP (900x600) -->
+                        <iframe class="iframe-desktop" seamless frameborder="0" scrolling="no"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=657562302&amp;format=interactive"></iframe>
                     </div>
                 </div>
 
