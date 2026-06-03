@@ -242,6 +242,16 @@
             padding-bottom: 55%;
         }
 
+        /* Triplos lado a lado sem gaps */
+        .graficos-triplos {
+            display: flex;
+            gap: 0;
+        }
+        .graficos-triplos .grafico-container {
+            flex: 1;
+            padding-bottom: 18%;
+        }
+
         /* ─── DESKTOP LAYOUT ─── */
         @media (min-width: 768px) {
             :root {
@@ -490,28 +500,59 @@
 
                 <!-- Gráfico extra de abastecimento -->
                 <div class="card">
-                    <div class="card-title">📊 Consumo Geral</div>
+                    <div class="card-title">📊 Ganhos e Km Rodado Semanal</div>
                     <div class="grafico-container ratio-med">
-                        <iframe seamless frameborder="0" scrolling="no"
-                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=419653621&amp;format=interactive"></iframe>
+                        <!-- Versão MOBILE (328x196) -->
+                        <iframe class="iframe-mobile" seamless frameborder="0" scrolling="no"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=920799482&amp;format=interactive"></iframe>
+                        
+                        <!-- Versão DESKTOP (600x290) -->
+                        <iframe class="iframe-desktop" seamless frameborder="0" scrolling="no"
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=381769266&amp;format=interactive"></iframe>
                     </div>
                 </div>
 
                 <!-- Ganhos do dia -->
                 <div class="card desktop-full">
                     <div class="card-title">💰 Ganhos do Dia por Aplicativo</div>
-                    <div class="grafico-container ratio-slim" style="margin-bottom:10px;">
-                        <iframe seamless frameborder="0" scrolling="no"
-                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1550207636&amp;format=interactive"></iframe>
-                    </div>
-                    <div class="graficos-duplos">
+                    <div class="graficos-triplos">
                         <div class="grafico-container">
-                            <iframe seamless frameborder="0" scrolling="no"
-                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=688946258&amp;format=interactive"></iframe>
+                            <!-- Versão MOBILE (328x196) -->
+                            <iframe class="iframe-mobile" seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=277923256&amp;format=interactive"></iframe>
+                            
+                            <!-- Versão DESKTOP (600x290) -->
+                            <iframe class="iframe-desktop" seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1595476518&amp;format=interactive"></iframe>
                         </div>
                         <div class="grafico-container">
-                            <iframe seamless frameborder="0" scrolling="no"
-                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSAyo9y8fLZc4k5qpQHj2y6I-oUoJ73dT5HzjcbqLND2wdaUKAzRoVLSrTAOcuhOzlvhVczq4iYNGp/pubchart?oid=419653621&amp;format=interactive"></iframe>
+                            <!-- Versão MOBILE (328x196) -->
+                            <iframe class="iframe-mobile" seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=1930536403&amp;format=interactive"></iframe>
+                            
+                            <!-- Versão DESKTOP (600x290) -->
+                            <iframe class="iframe-desktop" seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=410310086&amp;format=interactive"></iframe>
+                        </div>
+                        <div class="grafico-container">
+                            <!-- Versão MOBILE (328x196) -->
+                            <iframe class="iframe-mobile" seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=560958754&amp;format=interactive"></iframe>
+                            
+                            <!-- Versão DESKTOP (600x290) -->
+                            <iframe class="iframe-desktop" seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=738682581&amp;format=interactive"></iframe>
+                        </div>
+                    </div>
+                    <div class="graficos-duplos" style="margin-top:10px;">
+                        <div class="grafico-container">
+                            <!-- Versão MOBILE (328x196) -->
+                            <iframe class="iframe-mobile" seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=967289404&amp;format=interactive"></iframe>
+                            
+                            <!-- Versão DESKTOP (600x290) -->
+                            <iframe class="iframe-desktop" seamless frameborder="0" scrolling="no"
+                                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vStIXOfZ6UWeq-aJguqGqUWmWi_pWq5jrn5fRMJbK8sG84456eUQwP5GAS64PFhANFktuBdgakCQq1j/pubchart?oid=754289208&amp;format=interactive"></iframe>
                         </div>
                     </div>
                 </div>
